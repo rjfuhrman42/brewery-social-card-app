@@ -11,11 +11,16 @@ class Brewery extends Component{
 
     componentDidMount()
     {
-        let description, image;
+        let description, image, rand;
+
         this.callBackendAPI()
         .then(res => {
-            description = res.data[5].description
-            image = res.data[5].images.medium
+            rand = Math.floor(Math.random() * res.data.length);
+           
+            description = res.data[rand].description
+            console.log(rand)
+            image = res.data[rand].images.medium
+            console.log(rand)
             this.setState({description: description,
             image: image})
             });
@@ -34,9 +39,13 @@ class Brewery extends Component{
     render()
     {
         return(
-            <div>
-                <img src={this.state.image}></img>
-                <p>{this.state.description}</p>
+            <div className="card">
+                <div className="image">
+                    <img src={this.state.image} alt="brewery logo"></img>
+                </div>
+                <div className="description">
+                    <p>{this.state.description}</p>
+                </div>
             </div>
             )
     }

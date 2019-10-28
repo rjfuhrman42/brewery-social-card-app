@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display&display=swap');
+
 
 body{
     background-image: url("brewery.jpg");
@@ -6,7 +8,7 @@ body{
 
 .card{
 
-    border: 2px solid rgb(20, 20, 20);
+    border: 1px solid rgba(20, 20, 20, 0.534);
     border-radius: 20px;
     width: 40%;
     margin: 0;
@@ -14,12 +16,13 @@ body{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-family: 'Nunito', sans-serif;
-    background: white;
+    font-family: 'Playfair Display', serif;
+    background: rgb(255, 255, 255);
+    box-shadow: 2px 4px 5px 3px rgba(32, 32, 32, 0.5);
 }
 
 .image{
-    border-bottom: 2px solid rgb(20, 20, 20);
+
     padding: 20px;
 }
 
@@ -28,6 +31,15 @@ img {
     width: 100%;
     height: auto;
     border-radius: 20px;
+}
+
+h1{
+    text-align: center;
+}
+
+p{
+    font-size: 18px;
+
 }
 
 .description{

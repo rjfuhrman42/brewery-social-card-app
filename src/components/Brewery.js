@@ -1,5 +1,4 @@
 import React, {Component} from "react"
-import default_image from "../taproom.jpg"
 
 class Brewery extends Component{
     constructor(){
@@ -7,17 +6,20 @@ class Brewery extends Component{
         this.state = {
             name: "",
             description: "",
-            image: ""
+            image: "",
+            loading: false
         }
     }
 
     componentDidMount()
     {
-       let rand;
+        let rand;
+        this.setState({loading: true});
 
         this.callBackendAPI()
         .then(res => {
             rand = Math.floor(Math.random() * res.data.length);
+            if(rand === 1){rand = Math.floor(Math.random() * res.data.length)} // just need to remove Sam Adams
             try{
                 const {description, images, name} = res.data[rand];
         
@@ -25,7 +27,8 @@ class Brewery extends Component{
                     {
                         name: name,
                         description: description,
-                        image: images.large
+                        image: images.large,
+                        loading: false
                     })
             }
             catch(error)
@@ -35,7 +38,8 @@ class Brewery extends Component{
                     {
                         name: name,
                         description: description,
-                        image: ""
+                        image: "",
+                        loading: false
                     })
             }
         });
@@ -54,7 +58,16 @@ class Brewery extends Component{
 
     render()
     {
-        return(
+        if(this.state.loading)
+        {
+            return (
+            <div className="card">
+                <h1>Loading...</h1>
+            </div>
+            )
+
+        }
+        else return(
             <div className="card">
                 <div className="image">
                     <img src={this.state.image} alt="brewery logo"></img>

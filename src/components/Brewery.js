@@ -1,4 +1,5 @@
 import React, {Component} from "react"
+import default_image from "../taproom.jpg"
 
 class Brewery extends Component{
     constructor(){
@@ -24,7 +25,7 @@ class Brewery extends Component{
                     {
                         name: name,
                         description: description,
-                        image: images.icon
+                        image: images.large
                     })
             }
             catch(error)
@@ -57,9 +58,9 @@ class Brewery extends Component{
             <div className="card">
                 <div className="image">
                     <img src={this.state.image} alt="brewery logo"></img>
-                    <h1>{this.state.name}</h1>
                 </div>
                 <div className="description">
+                    <h1>{this.state.name}</h1>
                     <p>{this.state.description}</p>
                 </div>
             </div>

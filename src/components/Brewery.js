@@ -62,7 +62,7 @@ class Brewery extends Component{
         {
             return (
             <div className="card">
-                <h1>Loading...</h1>
+                <h1 id="loading">Loading...</h1>
             </div>
             )
 

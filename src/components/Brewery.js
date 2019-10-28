@@ -4,6 +4,7 @@ class Brewery extends Component{
     constructor(){
         super()
         this.state = {
+            name: "",
             description: "",
             image: ""
         }
@@ -11,19 +12,33 @@ class Brewery extends Component{
 
     componentDidMount()
     {
-        let description, image, rand;
+       let rand;
 
         this.callBackendAPI()
         .then(res => {
             rand = Math.floor(Math.random() * res.data.length);
-           
-            description = res.data[rand].description
-            console.log(rand)
-            image = res.data[rand].images.medium
-            console.log(rand)
-            this.setState({description: description,
-            image: image})
-            });
+            try{
+                const {description, images, name} = res.data[rand];
+        
+                this.setState(
+                    {
+                        name: name,
+                        description: description,
+                        image: images.icon
+                    })
+            }
+            catch(error)
+            {
+                const {description, name} = res.data[rand];
+                this.setState(
+                    {
+                        name: name,
+                        description: description,
+                        image: ""
+                    })
+            }
+        });
+
     }
 
     callBackendAPI = async () => {
@@ -42,6 +57,7 @@ class Brewery extends Component{
             <div className="card">
                 <div className="image">
                     <img src={this.state.image} alt="brewery logo"></img>
+                    <h1>{this.state.name}</h1>
                 </div>
                 <div className="description">
                     <p>{this.state.description}</p>

@@ -5,7 +5,7 @@ class Brewery extends Component{
         super()
         this.state = {
             name: "",
-            description: "",
+            data: "",
             image: "",
             loading: false,
             active: false
@@ -23,24 +23,23 @@ class Brewery extends Component{
         .then(res => {
             rand = Math.floor(Math.random() * res.data.length);
             if(rand === 1){rand = Math.floor(Math.random() * res.data.length)} // just need to remove Sam Adams ***THIS DOESN'T WORK :)
+            const brewData = res.data[this.props.num];
+
             try{
-                const {description, images, name} = res.data[rand];
-        
                 this.setState(
                     {
-                        name: name,
-                        description: description,
-                        image: images.large,
+                        name: brewData.name,
+                        data: brewData,
+                        image: brewData.images.large,
                         loading: false
                     })
             }
             catch(error)
             {
-                const {description, name} = res.data[rand];
                 this.setState(
                     {
-                        name: name,
-                        description: description,
+                        name: brewData.name,
+                        data: brewData,
                         image: "",
                         loading: false
                     })
@@ -69,7 +68,12 @@ class Brewery extends Component{
 
     render()
     {
-        if(this.state.loading)
+        const {name, data, image, loading, active} = this.state
+        const organic = data.isOrganic === "Y" ? "Is organic" : "Is not organic"
+        const massOwned = data.isMassOwned === "Y" ? "Is mass owned" : "Is not mass owned"
+        const inBusiness = data.isInBusiness === "Y" ? "Is currently in Business" : "Is currently out of business"
+        
+        if(loading)
         {
             return (
             <div className="card">
@@ -79,14 +83,19 @@ class Brewery extends Component{
 
         }
         else return(
-            <div className={this.state.active ? 'card-active' : 'card'} onClick={this.toActive}>
+
+            <div className={active ? 'card-active' : 'card'} onClick={this.toActive}>
                 <div className="card-inner">
                     <div className="image">
-                        <img src={this.state.image} alt="brewery logo"></img>
+                        <img src={image} alt="brewery logo"></img>
                     </div>
                     <div className="description">
-                        <h1>{this.state.name}</h1>
-                        {/* <p>{this.state.description}</p> */}
+                        <h1>{name}</h1>
+                        <p>est. {data.established}</p>
+                        <p>{organic}</p>
+                        <p>{massOwned}</p>
+                        <p>{inBusiness}</p>
+                        <a href={data.website}>{name} Website</a>
                     </div>
                 </div>
             </div>

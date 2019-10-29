@@ -1,15 +1,13 @@
 import React from "react"
 
-import Brewery from "./components/Brewery"
+import Container from "./components/Container"
 
 // console.log(process.env.REACT_APP_BREWERYDB_API_KEY)
 
 function App()
 {
     return (
-        <div>
-            <Brewery/>
-        </div>
+            <Container/>
     )
 }
 

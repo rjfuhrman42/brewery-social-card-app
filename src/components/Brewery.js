@@ -7,8 +7,11 @@ class Brewery extends Component{
             name: "",
             description: "",
             image: "",
-            loading: false
+            loading: false,
+            active: false
         }
+
+        this.toActive = this.toActive.bind(this)
     }
 
     componentDidMount()
@@ -19,7 +22,7 @@ class Brewery extends Component{
         this.callBackendAPI()
         .then(res => {
             rand = Math.floor(Math.random() * res.data.length);
-            if(rand === 1){rand = Math.floor(Math.random() * res.data.length)} // just need to remove Sam Adams
+            if(rand === 1){rand = Math.floor(Math.random() * res.data.length)} // just need to remove Sam Adams ***THIS DOESN'T WORK :)
             try{
                 const {description, images, name} = res.data[rand];
         
@@ -56,6 +59,14 @@ class Brewery extends Component{
         return body;
       };
 
+    toActive()
+    {
+        this.setState(prevState => ({ 
+            active: !prevState.active
+        })
+        )
+    }
+
     render()
     {
         if(this.state.loading)
@@ -68,13 +79,15 @@ class Brewery extends Component{
 
         }
         else return(
-            <div className="card">
-                <div className="image">
-                    <img src={this.state.image} alt="brewery logo"></img>
-                </div>
-                <div className="description">
-                    <h1>{this.state.name}</h1>
-                    <p>{this.state.description}</p>
+            <div className={this.state.active ? 'card-active' : 'card'} onClick={this.toActive}>
+                <div className="card-inner">
+                    <div className="image">
+                        <img src={this.state.image} alt="brewery logo"></img>
+                    </div>
+                    <div className="description">
+                        <h1>{this.state.name}</h1>
+                        {/* <p>{this.state.description}</p> */}
+                    </div>
                 </div>
             </div>
             )

@@ -10,7 +10,7 @@ function Container()
     )
 }
 
-function renderCards()
+function renderCards(num)
 {
     let deck = [];
     for(let x = 0; x < 8; x++)

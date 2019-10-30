@@ -4,7 +4,6 @@
 
 body{
     background-image: url("brewery.jpg");
-    overflow: hidden;
 }
 
 .grid-container{
@@ -91,4 +90,8 @@ a, a:visited{
 a:hover{
     background: grey;
     color: white;
+}
+
+button{
+    height: 50px;
 }

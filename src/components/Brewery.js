@@ -1,10 +1,11 @@
 import React, {Component} from "react"
+import CardFront from "./CardFront"
+import CardBack from "./CardBack"
 
 class Brewery extends Component{
     constructor(){
         super()
         this.state = {
-            name: "",
             data: "",
             image: "",
             loading: false,
@@ -16,19 +17,16 @@ class Brewery extends Component{
 
     componentDidMount()
     {
-        let rand;
         this.setState({loading: true});
 
         this.callBackendAPI()
         .then(res => {
-            rand = Math.floor(Math.random() * res.data.length);
-            if(rand === 1){rand = Math.floor(Math.random() * res.data.length)} // just need to remove Sam Adams ***THIS DOESN'T WORK :)
+
             const brewData = res.data[this.props.num];
 
             try{
                 this.setState(
                     {
-                        name: brewData.name,
                         data: brewData,
                         image: brewData.images.large,
                         loading: false
@@ -38,7 +36,6 @@ class Brewery extends Component{
             {
                 this.setState(
                     {
-                        name: brewData.name,
                         data: brewData,
                         image: "",
                         loading: false
@@ -68,11 +65,7 @@ class Brewery extends Component{
 
     render()
     {
-        const {name, data, image, loading, active} = this.state
-        const organic = data.isOrganic === "Y" ? "Is organic" : "Is not organic"
-        const massOwned = data.isMassOwned === "Y" ? "Is mass owned" : "Is not mass owned"
-        const inBusiness = data.isInBusiness === "Y" ? "Is currently in Business" : "Is currently out of business"
-        
+        const {data, image, loading, active} = this.state
         if(loading)
         {
             return (
@@ -86,17 +79,8 @@ class Brewery extends Component{
 
             <div className={active ? 'card-active' : 'card'} onClick={this.toActive}>
                 <div className="card-inner">
-                    <div className="image">
-                        <img src={image} alt="brewery logo"></img>
-                    </div>
-                    <div className="description">
-                        <h1>{name}</h1>
-                        <p>est. {data.established}</p>
-                        <p>{organic}</p>
-                        <p>{massOwned}</p>
-                        <p>{inBusiness}</p>
-                        <a href={data.website}>{name} Website</a>
-                    </div>
+                    <CardBack image={image}/>
+                    <CardFront data={data}/>
                 </div>
             </div>
             )
